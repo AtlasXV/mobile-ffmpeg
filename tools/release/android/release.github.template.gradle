@@ -1,0 +1,108 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
+
+buildscript {
+    repositories {
+    google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.6.4'
+    }
+}
+
+android {
+    compileSdkVersion Integer.parseInt(releaseTargetSdk)
+    ndkVersion "21.3.6528147"
+
+    defaultConfig {
+        minSdkVersion Integer.parseInt(releaseMinSdk)
+        targetSdkVersion Integer.parseInt(releaseTargetSdk)
+        versionCode Integer.parseInt(releaseVersionCode)
+        versionName releaseVersionName
+        project.archivesBaseName = releaseProject
+        consumerProguardFiles 'proguard-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ["../libs"]
+        }
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    libraryVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "${archivesBaseName}-${android.defaultConfig.versionName}.aar"
+        }
+    }
+}
+
+// build a jar with source files
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    failOnError false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.compile
+}
+
+// build a jar with javadoc
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier 'javadoc'
+    from javadoc.destinationDir
+}
+
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId "com.atlasv.android"
+                artifactId releaseProject
+                version releaseVersionName
+                artifact(sourcesJar)
+                artifact(javadocJar)
+            }
+        }
+
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/AtlasXV/android-libs")
+                credentials {
+                    username = System.getenv("GPR_USR") ?: project.findProperty("GPR_USR")
+                    password = System.getenv("GPR_KEY") ?: project.findProperty("GPR_KEY")
+                }
+            }
+        }
+    }
+}
+
+
+dependencies {
+    testImplementation "androidx.test.ext:junit:1.1.1"
+    testImplementation "org.json:json:20190722"
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
