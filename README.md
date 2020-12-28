@@ -6,7 +6,7 @@ mobile-FFmpeg 自定义打包sdk
 环境配置
 ------
 
-Mac环境变量配置ndk、Cmake:
+Mac环境变量配置ndk、Cmake（若没有需要先按照）:
 ```
 export ANDROID_NDK_ROOT=/Users/your-user-name/Library/Android/sdk/ndk/21.3.6528147
 export CMAKE_ROOT=/Applications/CMake.app/Contents/bin/
