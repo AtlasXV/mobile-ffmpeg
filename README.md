@@ -28,9 +28,11 @@ Step1: 确认流程
 以水印功能为例，按照[ffmpeg官方文档](https://ffmpeg.org/ffmpeg-all.html#Detailed-description)的描述，水印功能涉及到5个模块：
 
 编解码：
+
 <img src="./screenshot/transcoding.png" width="50%">
 
 过滤器：
+
 <img src="./screenshot/filtering.png" width="50%">
 
 1. demuxer
