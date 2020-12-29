@@ -18,6 +18,11 @@ export PATH=$CMAKE_ROOT:$PATH
 brew install nasm
 ```
 
+安装`pkg-config`
+```
+brew install pkg-config
+```
+
 **注**：build过程中可能会出现其他状况，一般按照[Logs](https://github.com/tanersener/mobile-ffmpeg/wiki/Logs)说明查看本地生成的`build.log`都能解决。
 
 **如果只想验证本地环境是否配置成功，可直接查看第三步：`执行打包命令`**
