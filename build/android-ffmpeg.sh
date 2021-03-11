@@ -409,14 +409,6 @@ ${SED_INLINE} 's/static int av_log_level/__thread int av_log_level/g' ${BASEDIR}
     --disable-nvenc \
     --disable-vaapi \
     --disable-vdpau \
-    --disable-everything \
-    --enable-decoder=h264,aac,mpeg4,png,bmp,jpeg2000,jpegls,mjpeg,mjpegb,smvjpeg,h264_mediacodec \
-    --enable-encoder=libx264,aac,libx264rgb,libx265,mpeg4,png,bmp,jpeg2000,jpegls,mjpeg,mjpegb,smvjpeg,gif \
-    --enable-protocol=file,concat \
-    --enable-demuxer=mov,image2,h264,mpegts \
-    --enable-muxer=mp4,image2,h264,mpegts,gif,segment \
-    --enable-filter=format,overlay,scale,scale2ref,null \
-    --enable-parser=aac,dvdsubopus,aac_latmflacpng,ac3,g723_1pnm,adx,g729rv30,av1,gif,rv40,avs2gsm,sbc,bmp,h261sipr,cavsvideo,h263tak,cookh264vc1,dca,hevcvorbis,dirac,jpeg2000vp3,dnxhd,mjpeg,vp8,dpx,mlp,vp9,dvaudio,mpeg4videowebp,dvbsubmpegaudio,xma,dvd_nav,mpegvideo \
     ${CONFIGURE_POSTFIX} 1>>${BASEDIR}/build.log 2>&1
 
 if [ $? -ne 0 ]; then

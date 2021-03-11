@@ -89,8 +89,8 @@ sh android-watermark.sh 449 4.4.9
 
 调试
 ---
-1. 在`android-watermark.sh`末尾gradle语句的`clean publish` 改成`clean publishMavenLocal`，可使用mavenLocal()仓库调试
-2. 本地调试阶段不需要打包所有CPU架构的so，可在`android-watermark.sh`中的`CUSTOM_OPTIONS`参数前追加`--disable-arm-v7a --disable-arm-v7a-neon --disable-x86 --disable-x86-64`，只打包`arm64-v8a`架构，大大减少build周期。
+1. 在`android-watermark.sh`末尾gradle语句的`clean publish` 改成`clean publishToMavenLocal`，可使用mavenLocal()仓库调试
+2. 本地调试阶段不需要打包所有CPU架构的so，可在`android-watermark.sh`中的`CUSTOM_OPTIONS`参数前加`--disable-arm-v7a --disable-arm-v7a-neon --disable-x86 --disable-x86-64`，只打包`arm64-v8a`架构，大大减少build周期。
 
 使用
 ---
