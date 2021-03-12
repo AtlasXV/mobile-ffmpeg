@@ -56,6 +56,8 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class Config {
 
+    public static boolean ENABLE_LOG = false;
+
     public static final int RETURN_CODE_SUCCESS = 0;
 
     public static final int RETURN_CODE_CANCEL = 255;
