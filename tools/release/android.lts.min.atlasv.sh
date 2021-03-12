@@ -47,10 +47,10 @@ fi
 # MIN RELEASE
 enable_gradle_build
 cd ${BASEDIR}/../.. || exit 1
-./android.sh ${CUSTOM_OPTIONS_DEBUG} || exit 1
+./android.sh ${CUSTOM_OPTIONS} || exit 1
 cd ${BASEDIR}/../../android/app || exit 1
 enable_gradle_release
-../gradlew -p ${BASEDIR}/../../android -PreleaseVersionCode=$1 -PreleaseVersionName=$2.LTS -PreleaseMinSdk=21 -PreleaseTargetSdk=29 -PreleaseProject=mobile-ffmpeg-min-atlasv clean publishToMavenLocal || exit 1
+../gradlew -p ${BASEDIR}/../../android -PreleaseVersionCode=$1 -PreleaseVersionName=$2.LTS -PreleaseMinSdk=21 -PreleaseTargetSdk=29 -PreleaseProject=mobile-ffmpeg-min-atlasv clean publish || exit 1
 create_package "min-atlasv" "$2" || exit 1
 
 
