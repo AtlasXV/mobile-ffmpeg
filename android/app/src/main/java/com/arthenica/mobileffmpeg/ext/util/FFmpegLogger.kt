@@ -9,7 +9,7 @@ import com.arthenica.mobileffmpeg.Config
  */
 object FFmpegLogger {
     @JvmStatic
-    fun ffmpegLog(logMessage: () -> String) {
+    fun log(logMessage: () -> String) {
         if (Config.ENABLE_LOG) {
             Log.d(Config.TAG, logMessage())
         }

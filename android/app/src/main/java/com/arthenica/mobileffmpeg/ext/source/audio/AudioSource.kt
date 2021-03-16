@@ -1,5 +1,7 @@
 package com.arthenica.mobileffmpeg.ext.source.audio
 
+import com.arthenica.mobileffmpeg.ext.option.ChannelLayouts
+import com.arthenica.mobileffmpeg.ext.option.SampleRateOption
 import com.arthenica.mobileffmpeg.ext.source.Source
 
 /**
@@ -8,5 +10,5 @@ import com.arthenica.mobileffmpeg.ext.source.Source
  */
 open class AudioSource : Source() {
     protected var channelLayout: String = ChannelLayouts.STEREO
-    protected var sampleRate: Long = 44100
+    protected var sampleRate = SampleRateOption.COMMON_RATE
 }
