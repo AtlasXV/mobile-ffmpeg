@@ -44,13 +44,13 @@ object FFmpegLogger {
         return builder.append("\n").toString()
     }
 
-    fun logCmdBottom(cmd: String, timeMillis: Long) {
+    fun logCmdBottom(cmd: String, code: Int, timeMillis: Long) {
         if (!ENABLE_LOG) {
             return
         }
         val builder = StringBuilder()
         builder.append(HEAD_LINE)
-        builder.append("|FFmpeg run end\n")
+        builder.append("|FFmpeg run end: code=$code\n")
         builder.append(getCmdInfo(cmd))
         builder.append("|take time: $timeMillis(ms)\n")
         builder.append(BOTTOM_LINE)

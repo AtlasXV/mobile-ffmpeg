@@ -107,7 +107,7 @@ class MobileFFmpeg {
                 FFmpegLogger.logCmdHeader(cmd)
                 val code = FFmpeg.execute(cmd)
                 val endTimeMillis = if (ENABLE_LOG) System.currentTimeMillis() else 0
-                FFmpegLogger.logCmdBottom(cmd, endTimeMillis - startTimeMillis)
+                FFmpegLogger.logCmdBottom(cmd, code, endTimeMillis - startTimeMillis)
                 return code
             }
         }
