@@ -6,4 +6,5 @@ package com.arthenica.mobileffmpeg.ext.format
  */
 object Formats {
     const val LAVFI = "lavfi"
+    const val MPEGTS = "mpegts"
 }

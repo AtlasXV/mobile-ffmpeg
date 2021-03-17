@@ -7,6 +7,7 @@ import com.arthenica.mobileffmpeg.ext.option.MediaOption
 import com.arthenica.mobileffmpeg.ext.source.FileSource
 import com.arthenica.mobileffmpeg.ext.source.Source
 import com.arthenica.mobileffmpeg.ext.util.FFmpegLogger
+import com.arthenica.mobileffmpeg.ext.util.TempFileFactory
 import java.io.File
 
 /**
@@ -34,6 +35,11 @@ class MobileFFmpeg {
         return this
     }
 
+    fun codec(codec: String): MobileFFmpeg {
+        parts.add("-c $codec")
+        return this
+    }
+
     fun videoCodec(codec: String): MobileFFmpeg {
         parts.add("-c:v $codec")
         return this
@@ -54,6 +60,11 @@ class MobileFFmpeg {
         return this
     }
 
+    fun audioFilter(filter: MediaFilter): MobileFFmpeg {
+        parts.add("-af $filter")
+        return this
+    }
+
     fun output(path: String, overwrite: Boolean = true): MobileFFmpeg {
         parts.add(if (overwrite) "-y '$path'" else "'$path'")
         return this
@@ -61,11 +72,6 @@ class MobileFFmpeg {
 
     fun output(file: File, overwrite: Boolean = true): MobileFFmpeg {
         return output(file.absolutePath, overwrite)
-    }
-
-    fun audioFilter(filter: MediaFilter): MobileFFmpeg {
-        parts.add("-af $filter")
-        return this
     }
 
     fun build(): String {
@@ -84,12 +90,25 @@ class MobileFFmpeg {
     }
 
     companion object {
+        private lateinit var tempFileFactory: TempFileFactory
+        var ENABLE_LOG = false
+
+        fun setTempFileFactory(factory: TempFileFactory) {
+            this.tempFileFactory = factory
+        }
+
+        fun createTempFile(prefix: String = "temp_", suffix: String): File {
+            return tempFileFactory.createTempFile(prefix, suffix)
+        }
+
         fun exec(cmd: String): Int {
             synchronized(MobileFFmpeg::class.java) {
-                FFmpegLogger.log { "---------------------- run FFmpeg Cmd start ----------------------\n[$cmd]\n" }
-                return FFmpeg.execute(cmd).also {
-                    FFmpegLogger.log { "---------------------- run FFmpeg Cmd end code=($it) ----------------------\n" }
-                }
+                val startTimeMillis = if (ENABLE_LOG) System.currentTimeMillis() else 0
+                FFmpegLogger.logCmdHeader(cmd)
+                val code = FFmpeg.execute(cmd)
+                val endTimeMillis = if (ENABLE_LOG) System.currentTimeMillis() else 0
+                FFmpegLogger.logCmdBottom(cmd, endTimeMillis - startTimeMillis)
+                return code
             }
         }
     }
