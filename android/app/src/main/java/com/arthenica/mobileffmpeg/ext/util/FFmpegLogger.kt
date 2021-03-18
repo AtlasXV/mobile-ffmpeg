@@ -1,8 +1,8 @@
 package com.arthenica.mobileffmpeg.ext.util
 
-import android.util.Log
 import com.arthenica.mobileffmpeg.Config
-import com.arthenica.mobileffmpeg.ext.cmd.MobileFFmpeg.Companion.ENABLE_LOG
+import com.arthenica.mobileffmpeg.Level
+import com.arthenica.mobileffmpeg.LogMessage
 
 /**
  * weiping@atlasv.com
@@ -14,15 +14,11 @@ object FFmpegLogger {
 
     @JvmStatic
     fun log(logMessage: () -> String) {
-        if (ENABLE_LOG) {
-            Log.d(Config.TAG, logMessage())
-        }
+        Config.logCallbackFunction?.apply(LogMessage(0, Level.AV_LOG_INFO, logMessage()))
     }
 
     fun logCmdHeader(cmd: String) {
-        if (!ENABLE_LOG) {
-            return
-        }
+        Config.logCallbackFunction ?: return
         val builder = StringBuilder()
         builder.append(HEAD_LINE)
         builder.append("|FFmpeg run start\n")
@@ -45,9 +41,7 @@ object FFmpegLogger {
     }
 
     fun logCmdBottom(cmd: String, code: Int, timeMillis: Long) {
-        if (!ENABLE_LOG) {
-            return
-        }
+        Config.logCallbackFunction ?: return
         val builder = StringBuilder()
         builder.append(HEAD_LINE)
         builder.append("|FFmpeg run end: code=$code\n")

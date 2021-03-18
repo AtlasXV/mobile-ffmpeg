@@ -69,7 +69,7 @@ public class Config {
 
     public static final String MOBILE_FFMPEG_PIPE_PREFIX = "mf_pipe_";
 
-    private static LogCallback logCallbackFunction;
+    public static LogCallback logCallbackFunction;
 
     private static Level activeLogLevel;
 
