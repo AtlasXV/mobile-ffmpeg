@@ -74,6 +74,13 @@ class MobileFFmpeg {
         return output(file.absolutePath, overwrite)
     }
 
+    fun asMp4(): File? {
+        return createTempFile(suffix = ".mp4").takeIf {
+            output(it)
+            exec() == 0
+        }
+    }
+
     fun build(): String {
         val content = StringBuilder()
         parts.forEachIndexed { index, s ->
