@@ -74,8 +74,8 @@ class MobileFFmpeg {
         return output(file.absolutePath, overwrite)
     }
 
-    fun asMp4(): File? {
-        return createTempFile(suffix = ".mp4").takeIf {
+    fun asMp4(prefix: String = ""): File? {
+        return createTempFile(prefix = prefix, suffix = ".mp4").takeIf {
             output(it)
             exec() == 0
         }
@@ -102,6 +102,10 @@ class MobileFFmpeg {
 
         fun setTempFileFactory(factory: TempFileFactory) {
             this.tempFileFactory = factory
+        }
+
+        fun cleanTempFiles(){
+            tempFileFactory.clean()
         }
 
         fun createTempFile(prefix: String = "temp_", suffix: String): File {
