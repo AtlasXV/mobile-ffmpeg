@@ -15,17 +15,14 @@ import java.io.File
 
 object FFmpegUtils {
     fun mixMuteAudio(inputFile: File, seconds: Float): File? {
-        return MobileFFmpeg.createTempFile(suffix = ".mp4").takeIf {
-            MobileFFmpeg()
-                    .format(Formats.LAVFI)
-                    .input(ANullSrc())
-                    .input(inputFile)
-                    .duration(SecondDuration(seconds))
-                    .videoCodec(Codecs.COPY)
-                    .audioCodec(Codecs.AAC)
-                    .output(it)
-                    .exec() == 0
-        }
+        return MobileFFmpeg()
+                .format(Formats.LAVFI)
+                .input(ANullSrc())
+                .input(inputFile)
+                .duration(SecondDuration(seconds))
+                .videoCodec(Codecs.COPY)
+                .audioCodec(Codecs.AAC)
+                .asMp4(prefix = "mix_mute_audio_")
     }
 
     /**
@@ -52,13 +49,10 @@ object FFmpegUtils {
         if (tsFiles.isEmpty()) {
             return null
         }
-        return MobileFFmpeg.createTempFile(suffix = ".mp4").takeIf { outputFile ->
-            MobileFFmpeg()
-                    .input(ConcatSource(tsFiles))
-                    .codec(Codecs.COPY)
-                    .option("-bsf:a", "aac_adtstoasc")
-                    .output(outputFile)
-                    .exec() == 0
-        }
+        return MobileFFmpeg()
+                .input(ConcatSource(tsFiles))
+                .codec(Codecs.COPY)
+                .option("-bsf:a", "aac_adtstoasc")
+                .asMp4(prefix = "concat_")
     }
 }
