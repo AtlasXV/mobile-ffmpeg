@@ -79,7 +79,11 @@ class MobileFFmpeg {
     }
 
     fun asFile(prefix: String = "", suffix: String): File? {
-        return createTempFile(prefix = prefix, suffix = suffix).takeIf {
+        return intoFile(createTempFile(prefix = prefix, suffix = suffix))
+    }
+
+    fun intoFile(outputFile: File): File? {
+        return outputFile.takeIf {
             output(it)
             exec() == 0
         }
