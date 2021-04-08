@@ -33,18 +33,11 @@ object FFmpegUtils {
             return fileList.getOrNull(0)
         }
         val tsFiles = fileList.mapNotNull {
-            val outputFile = MobileFFmpeg.createTempFile(suffix = ".ts")
-            val code = MobileFFmpeg().input(it)
+            MobileFFmpeg().input(it)
                     .codec(Codecs.COPY)
                     .option("-bsf:v", "h264_mp4toannexb")
                     .format(Formats.MPEGTS)
-                    .output(outputFile)
-                    .exec()
-            if (code == 0) {
-                outputFile
-            } else {
-                null
-            }
+                    .asFile(suffix = ".ts")
         }
         if (tsFiles.isEmpty()) {
             return null

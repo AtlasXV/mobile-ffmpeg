@@ -75,7 +75,11 @@ class MobileFFmpeg {
     }
 
     fun asMp4(prefix: String = ""): File? {
-        return createTempFile(prefix = prefix, suffix = ".mp4").takeIf {
+        return asFile(prefix = prefix, suffix = ".mp4")
+    }
+
+    fun asFile(prefix: String = "", suffix: String): File? {
+        return createTempFile(prefix = prefix, suffix = suffix).takeIf {
             output(it)
             exec() == 0
         }
