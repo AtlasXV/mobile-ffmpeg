@@ -8,6 +8,6 @@ import java.io.File
  * 3/17/21
  */
 interface TempFileFactory {
-    fun createTempFile(prefix: String, suffix: String): File
+    fun createTempFile(prefix: String, suffix: String): File?
     fun clean(): Boolean
 }

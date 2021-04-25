@@ -1,6 +1,9 @@
 package com.arthenica.mobileffmpeg.ext.cmd
 
+import com.arthenica.mobileffmpeg.Config
 import com.arthenica.mobileffmpeg.FFmpeg
+import com.arthenica.mobileffmpeg.Level
+import com.arthenica.mobileffmpeg.LogMessage
 import com.arthenica.mobileffmpeg.ext.duration.Duration
 import com.arthenica.mobileffmpeg.ext.filter.MediaFilter
 import com.arthenica.mobileffmpeg.ext.option.MediaOption
@@ -79,7 +82,7 @@ class MobileFFmpeg {
     }
 
     fun asFile(prefix: String = "", suffix: String): File? {
-        return intoFile(createTempFile(prefix = prefix, suffix = suffix))
+        return createTempFile(prefix = prefix, suffix = suffix)?.let { intoFile(it) }
     }
 
     fun intoFile(outputFile: File): File? {
@@ -112,12 +115,16 @@ class MobileFFmpeg {
             this.tempFileFactory = factory
         }
 
-        fun cleanTempFiles(){
+        fun cleanTempFiles() {
             tempFileFactory.clean()
         }
 
-        fun createTempFile(prefix: String = "temp_", suffix: String): File {
-            return tempFileFactory.createTempFile(prefix, suffix)
+        fun createTempFile(prefix: String = "temp_", suffix: String): File? {
+            val tempFile = tempFileFactory.createTempFile(prefix, suffix)
+            if (tempFile == null) {
+                Config.logCallbackFunction?.apply(LogMessage(0, Level.AV_LOG_ERROR, "TempFileFactory can not create file: prefix=$prefix, suffix=$suffix"))
+            }
+            return tempFile
         }
 
         fun exec(cmd: String): Int {
