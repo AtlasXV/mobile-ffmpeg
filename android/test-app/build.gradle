@@ -54,7 +54,7 @@ android.applicationVariants.all { variant ->
 
 dependencies {
     // implementation project(':app')
-    implementation 'com.atlasv.android:mobile-ffmpeg-min-atlasv:4.4.8.1.LTS'
+    implementation 'com.atlasv.android:mobile-ffmpeg-min-atlasv:4.4.9.2.LTS'
 //    implementation 'com.arthenica:mobile-ffmpeg-full:4.4.LTS'
     implementation 'com.arthenica:smart-exception-java:0.1.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
