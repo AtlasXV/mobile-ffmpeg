@@ -8,6 +8,6 @@ package com.arthenica.mobileffmpeg.ext.source.audio
 class ANullSrc : AudioSource() {
 
     override fun toString(): String {
-        return "anullsrc=channel_layout=$channelLayout:sample_rate=$sampleRate"
+        return "'anullsrc=channel_layout=$channelLayout:sample_rate=$sampleRate'"
     }
 }

@@ -16,6 +16,6 @@ class ConcatSource(private val fileList: List<File>) : Source() {
                 builder.append("|")
             }
         }
-        return builder.toString()
+        return "'$builder'"
     }
 }

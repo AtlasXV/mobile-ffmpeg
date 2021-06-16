@@ -15,6 +15,6 @@ class FileSource : Source {
     }
 
     override fun toString(): String {
-        return filePath
+        return "\"$filePath\""
     }
 }

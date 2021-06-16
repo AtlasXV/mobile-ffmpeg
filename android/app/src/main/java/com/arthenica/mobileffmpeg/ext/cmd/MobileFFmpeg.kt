@@ -22,7 +22,7 @@ class MobileFFmpeg {
     }
 
     fun input(source: Source): MobileFFmpeg {
-        parts.add("-i '$source'")
+        parts.add("-i $source")
         return this
     }
 
