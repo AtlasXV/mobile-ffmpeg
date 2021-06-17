@@ -6,6 +6,7 @@
 export BASEDIR=$(pwd)
 export PACKAGE_DIRECTORY="${BASEDIR}/../../prebuilt/android-aar/mobile-ffmpeg"
 export CUSTOM_OPTIONS="--lts --enable-android-zlib --enable-android-media-codec"
+export GPL_PACKAGES="--enable-gpl --enable-libvidstab --enable-x264 --enable-x265 --enable-xvidcore"
 export CUSTOM_OPTIONS_DEBUG="--disable-arm-v7a --disable-arm-v7a-neon --disable-x86 --disable-x86-64 --lts --enable-android-zlib --enable-android-media-codec"
 
 create_package() {
@@ -47,7 +48,7 @@ fi
 # MIN RELEASE
 enable_gradle_build
 cd ${BASEDIR}/../.. || exit 1
-./android.sh ${CUSTOM_OPTIONS} || exit 1
+./android.sh ${CUSTOM_OPTIONS} ${GPL_PACKAGES} || exit 1
 cd ${BASEDIR}/../../android/app || exit 1
 enable_gradle_release
 ../gradlew -p ${BASEDIR}/../../android -PreleaseVersionCode=$1 -PreleaseVersionName=$2.LTS -PreleaseMinSdk=21 -PreleaseTargetSdk=29 -PreleaseProject=mobile-ffmpeg-min-atlasv clean publish || exit 1
